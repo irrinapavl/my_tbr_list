@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+    themes:
+      night,
+      caramellatte,
+      forest,
+      synthwave,
+      lemonade,
+      valentine,
+      emerald,
+      dracula,
+      nord,
+      sunset,
+      fantasy,
+      abyss,
+      cmyk,
+      autumn,
+      acid,
+      winter,
+      garden
+  }
+
+@font-face {
+  font-family: Comfortaa;
+  src: url("./assets/fonts/Comfortaa-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: Caveat;
+  src: url("./assets/fonts/Caveat.woff2") format("woff2");
+}
+
+@theme {
+  --font-comfortaa: 'Comfortaa', sans-serif;
+  --font-caveat: 'Caveat', sans-serif;
+}
