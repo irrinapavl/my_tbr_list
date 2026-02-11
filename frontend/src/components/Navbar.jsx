@@ -1,11 +1,11 @@
-import { Link, useResolvedPath } from 'react-router-dom'
-import { BookOpenText, LibraryBig } from 'lucide-react';
+import { Link } from 'react-router-dom'
 import ThemeSelector from "./ThemeSelector.jsx";
+import { useAuthStore } from '../store/useAuthStore.js';
+import { BookOpenText, LibraryBig } from 'lucide-react';
 
 function Navbar() {
 
-  const { pathname } = useResolvedPath()
-  const isHomePage = pathname === "/"
+  const { user, logout } = useAuthStore()
 
   return (
     <div className="bg-base-100/80 backdrop-blur-lg 
@@ -26,12 +26,19 @@ function Navbar() {
           </div>
           {/* RIGHT SECTION */}
           <div className="flex items-center gap-4">
+            {user && (
+              <button 
+              className='btn btn-primary' 
+              onClick={logout}>
+                <Link to='/' className='font-comfortaa'>Выйти из аккаунта</Link>
+              </button>
+            )}
             <ThemeSelector />
-            {isHomePage && (
+            {user && (
               <div className="indicator">
                 <div className="p-2 rounded-full hover:bg-base-200 
                 transition-colors cursor-pointer">
-                  <LibraryBig className="size-5" />
+                  <LibraryBig className="size-5 btn-ghost" />
                   <span className="badge badge-sm badge-primary indicator-item">0</span>
                 </div>
               </div>

@@ -9,7 +9,7 @@ function ThemeSelector() {
   return (
     <div className="dropdown dropdown-end">
 
-        <button tabIndex={0} className="btn btn-ghost btn-circle cursor-pointer">
+        <button tabIndex={0} className="btn btn-ghost btn-circle">
           <Palette className="size-5" />
         </button>
 
