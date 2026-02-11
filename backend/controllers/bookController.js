@@ -1,15 +1,19 @@
 import pool from '../config/db.js'
 
 export const getBooks = async (req, res) => {
+    
+    const user_id = req.user.id
 
     try {
         const books = await pool.query(
-            'SELECT * FROM books ORDER BY created_at DESC'
+            'SELECT * FROM books WHERE user_id = $1 ORDER BY created_at DESC',
+            [user_id]
         )
         res.status(200).json({ 
             success: true, 
             data: books.rows
         })
+
     } catch (err) {
         console.log("Error getting books", err)
         res.status(500).json({ 
@@ -22,6 +26,7 @@ export const getBooks = async (req, res) => {
 export const createBook = async (req, res) => {
     
     const { name, author, cover} = req.body
+    const user_id = req.user.id
 
     if (!name || !author || !cover) {
         return res.status(400).json({ 
@@ -32,13 +37,14 @@ export const createBook = async (req, res) => {
     
     try {
         const newBook = await pool.query(
-            'INSERT INTO books (name, author, cover) VALUES ($1, $2, $3) RETURNING *',
-            [name, author, cover]
+            'INSERT INTO books (name, author, cover, user_id) VALUES ($1, $2, $3, $4) RETURNING *',
+            [name, author, cover, user_id]
         )
         res.status(201).json({ 
             success: true, 
             data: newBook.rows[0] 
         })
+
     } catch (err) {
         console.log("Error creating a book", err)
         res.status(500).json({ 
@@ -51,15 +57,18 @@ export const createBook = async (req, res) => {
 export const getBook = async (req, res) => {
 
     const { id } = req.params
+    const user_id = req.user.id
 
     try {
         const Book = await pool.query(
-            'SELECT * FROM books WHERE id = $1', [id]
+            'SELECT * FROM books WHERE id = $1 AND user_id = $2', 
+            [id, user_id]
         )
         res.status(200).json({ 
             success: true, 
             data: Book.rows[0] 
         })
+
     } catch (err) {
         console.log("Error getting a book", err)
         res.status(500).json({
@@ -73,14 +82,13 @@ export const updateBook = async (req, res) => {
 
     const { id } = req.params
     const { name, author, cover } = req.body
+    const user_id = req.user.id
 
     try {
         const updatedBook = await pool.query(
-            'UPDATE books SET name = $1, author = $2, cover = $3 WHERE id = $4 RETURNING *',
-            [name, author, cover, id]
+            'UPDATE books SET name = $1, author = $2, cover = $3 WHERE id = $4 AND user_id = $5 RETURNING *',
+            [name, author, cover, id, user_id]
         )
-
-        console.log(updatedBook)
 
         if (updatedBook.rows.length === 0) {
             return res.status(404).json({ 
@@ -93,6 +101,7 @@ export const updateBook = async (req, res) => {
             success: true, 
             data: updatedBook.rows[0] 
         })
+        
     } catch (err) {
         console.log("Error updating a book", err)
         res.status(500).json({
@@ -105,13 +114,15 @@ export const updateBook = async (req, res) => {
 export const deleteBook = async (req, res) => {
 
     const { id } = req.params
+    const user_id = req.user.id
 
     try {
         const deletedBook = await pool.query(
-            'DELETE FROM books WHERE id = $1 RETURNING *', [id]
+            'DELETE FROM books WHERE id = $1 AND user_id = $2 RETURNING *', 
+            [id, user_id]
         )
 
-        if (deletedBook.length === 0) {
+        if (deletedBook.rows.length === 0) {
             return res.status(404).json({ 
                 success: false, 
                 message: "Book not found"

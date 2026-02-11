@@ -2,7 +2,12 @@ import { create } from 'zustand'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
-const BASE_URL = "http://localhost:5000"
+const BASE_URL = "http://localhost:5000";
+
+const api = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true,
+});
 
 export const useBookStore = create((set, get) => ({
     books: [],
@@ -29,7 +34,7 @@ export const useBookStore = create((set, get) => ({
         set({ loading: true })
         try {
             const { formData } = get()
-            await axios.post(`${BASE_URL}/api/books`, formData)
+            await api.post(`/api/mybooks`, formData)
             await get().fetchBooks()
             get().resetForm()
             toast.success("Книга успешно добавлена в список!")
@@ -46,7 +51,7 @@ export const useBookStore = create((set, get) => ({
         set({ loading: true })
         try {
             const { formData } = get()
-            await axios.put(`${BASE_URL}/api/books/${formData.id}`, formData)
+            await api.put(`/api/mybooks/${formData.id}`, formData)
             await get().fetchBooks()
             get().resetForm()
             toast.success("Книга успешно отредактирована!")
@@ -62,7 +67,7 @@ export const useBookStore = create((set, get) => ({
     fetchBooks: async () => {
         set({ loading: true })
         try {
-            const response = await axios.get(`${BASE_URL}/api/books`)
+            const response = await api.get(`/api/mybooks`)
             set({ books: response.data.data, error: null })
         } catch (err) {
             if (err.status == 429) set({ error: "Rate limit exceeded", books: [] })
@@ -75,7 +80,7 @@ export const useBookStore = create((set, get) => ({
     deleteBook: async (id) => {
         set({ loading: true })
         try {
-            await axios.delete(`${BASE_URL}/api/books/${id}`)
+            await api.delete(`/api/mybooks/${id}`)
             set((prev) => ({ books: prev.books.filter((book) => book.id !== id)}))
             toast.success("Книга успешно удалена из списка")
         } catch (err) {

@@ -27,12 +27,12 @@ function BookCard({ book }) {
         className="absoulte top-0 left-0 h-80 object-contain" />
       </figure>
 
-      <div className="card-body">
-        <h2 className="card-title text-4xl font-caveat">{book.name}</h2>
+      <div className="card-body flex-col items-center text-center p-0">
+        <h2 className="card-title text-5xl font-caveat">{book.name}</h2>
         <p className="text-2xl font-bold font-comfortaa text-primary">{book.author}</p>
       </div>
 
-      <div className="card-actions justify-end pe-3 pb-3">
+      <div className="card-actions justify-end pe-3 pb-3 mt-3">
         <button className="btn btn-sm btn-info btn-outline">
             <SquarePen className="size-4" onClick={handleEditClick}/>
         </button>
