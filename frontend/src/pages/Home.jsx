@@ -7,25 +7,25 @@ import EditBookModal from "../components/EditBookModal"
 
 function Home() {
 
-  const { books, loading, error, fetchBooks } = useBookStore()
+  const { books, loading, getBooks } = useBookStore()
 
   useEffect(() => {
-    fetchBooks()
-  }, [fetchBooks])
+    getBooks()
+  }, [getBooks])
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
         <button 
-        className="btn btn-primary rounded-3xl"
-        onClick={() => document.getElementById("add-book-modal").showModal()}>
+          className="btn btn-primary rounded-3xl"
+          onClick={() => document.getElementById("add-book-modal").showModal()}>
           <CirclePlus className="size-5" />
           <span className="font-comfortaa">Добавить книгу</span>
         </button>
         <div 
         className="tooltip tooltip-primary tooltip-left font-comfortaa p-0" 
         data-tip="Обновить список">
-          <button className="btn btn-ghost btn-circle" onClick={fetchBooks}>
+          <button className="btn btn-ghost btn-circle" onClick={getBooks}>
           <RefreshCw className="size-5" />
         </button>
         </div>
@@ -33,8 +33,6 @@ function Home() {
 
       <AddBookModal />
       <EditBookModal />
-
-      {error && <div className="alert alert-error mb-8">{error}</div>}
       
       {books.length === 0 && !loading && (
         <div className="flex flex-col justify-center items-center h-96 space-y-4">

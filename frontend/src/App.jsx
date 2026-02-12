@@ -6,6 +6,7 @@ import Home from "./pages/Home"
 import Default from "./pages/Default"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
+import Library from "./pages/Library"
 import { Toaster } from 'react-hot-toast';
 import { useEffect } from "react"
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/mybooks" element={<Home /> } />
+          <Route path="/library" element={<Library /> } />
           <Route path="*" element={<Default />} />
         </Routes>
       <Toaster />

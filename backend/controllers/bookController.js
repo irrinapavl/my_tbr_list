@@ -6,7 +6,7 @@ export const getBooks = async (req, res) => {
 
     try {
         const books = await pool.query(
-            'SELECT * FROM books WHERE user_id = $1 ORDER BY created_at DESC',
+            'SELECT * FROM books WHERE user_id = $1 AND finished = FALSE ORDER BY created_at DESC',
             [user_id]
         )
         res.status(200).json({ 
@@ -48,30 +48,6 @@ export const createBook = async (req, res) => {
     } catch (err) {
         console.log("Error creating a book", err)
         res.status(500).json({ 
-            success: false, 
-            message: "Internal Server Error"
-        })
-    }
-}
-
-export const getBook = async (req, res) => {
-
-    const { id } = req.params
-    const user_id = req.user.id
-
-    try {
-        const Book = await pool.query(
-            'SELECT * FROM books WHERE id = $1 AND user_id = $2', 
-            [id, user_id]
-        )
-        res.status(200).json({ 
-            success: true, 
-            data: Book.rows[0] 
-        })
-
-    } catch (err) {
-        console.log("Error getting a book", err)
-        res.status(500).json({
             success: false, 
             message: "Internal Server Error"
         })
@@ -136,6 +112,93 @@ export const deleteBook = async (req, res) => {
         
     } catch (err) {
         console.error("Error deleting a book", err)
+        res.status(500).json({ 
+            success: false, 
+            message: "Internal Server Error"
+        })
+    }
+}
+
+export const moveToLib = async(req, res) => {
+
+    const { id } = req.params
+    const user_id = req.user.id
+
+    try {
+        const movedBook = await pool.query(
+            'UPDATE books SET finished = TRUE WHERE id = $1 AND user_id = $2 RETURNING *', 
+            [id, user_id]
+        )
+
+        if (movedBook.rows.length === 0) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "Book not found"
+            })
+        }
+
+        res.status(200).json({ 
+            success: true, 
+            data: movedBook.rows[0] 
+        })
+        
+    } catch (err) {
+        console.error("Error moving a book", err)
+        res.status(500).json({ 
+            success: false, 
+            message: "Internal Server Error"
+        })
+    }
+}
+
+export const getLibBooks = async (req, res) => {
+    
+    const user_id = req.user.id
+
+    try {
+        const books = await pool.query(
+            'SELECT * FROM books WHERE finished = TRUE AND user_id = $1 ORDER BY created_at DESC',
+            [user_id]
+        )
+        res.status(200).json({ 
+            success: true, 
+            data: books.rows
+        })
+
+    } catch (err) {
+        console.log("Error getting books", err)
+        res.status(500).json({ 
+            success: false, 
+            message: "Internal Server Error"
+        })
+    }
+}
+
+export const moveToHome = async(req, res) => {
+
+    const { id } = req.params
+    const user_id = req.user.id
+
+    try {
+        const movedBook = await pool.query(
+            'UPDATE books SET finished = FALSE WHERE id = $1 AND user_id = $2 RETURNING *', 
+            [id, user_id]
+        )
+
+        if (movedBook.rows.length === 0) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "Book not found"
+            })
+        }
+
+        res.status(200).json({ 
+            success: true, 
+            data: movedBook.rows[0] 
+        })
+        
+    } catch (err) {
+        console.error("Error moving a book", err)
         res.status(500).json({ 
             success: false, 
             message: "Internal Server Error"

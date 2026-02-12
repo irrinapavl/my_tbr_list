@@ -14,6 +14,7 @@ CREATE TABLE books(
     author VARCHAR(50) NOT NULL,
     cover VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    finished BOOLEAN DEFAULT FALSE,
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
 
@@ -31,3 +32,9 @@ VALUES
 ('Дюна', 'Фрэнк Герберт', 'https://www.belykrolik.ru/media/catalog/product_images/14900811_1_dyuna.jpg', 1),
 ('Игра престолов', 'Джордж Мартин', 'https://cdn.litres.ru/pub/c/cover/248812.jpg', 1);
 
+CREATE TABLE library(
+    id SERIAL PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    finished BOOLEAN DEFAULT FALSE,
+    list_id INTEGER REFERENCES books(id)
+);

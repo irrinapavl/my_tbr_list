@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
-import ThemeSelector from "./ThemeSelector.jsx";
-import { useAuthStore } from '../store/useAuthStore.js';
-import { BookOpenText, LibraryBig } from 'lucide-react';
+import ThemeSelector from "./ThemeSelector.jsx"
+import { useAuthStore } from '../store/useAuthStore.js'
+import { BookOpenText, LibraryBig } from 'lucide-react'
+import { useResolvedPath } from 'react-router-dom'
 
 function Navbar() {
 
+  const { pathname } = useResolvedPath()
+  const isLibrary = pathname === "/library"
   const { user, logout } = useAuthStore()
 
   return (
@@ -24,21 +27,28 @@ function Navbar() {
               </div>
             </Link>
           </div>
+          {isLibrary && (
+            <button className='btn btn-primary btn-outline me-10'>
+              <Link to='/mybooks' className='font-comfortaa'>Вернуться к списку</Link>
+            </button>
+          )}
           {/* RIGHT SECTION */}
           <div className="flex items-center gap-4">
             {user && (
               <button 
-              className='btn btn-primary' 
+              className='btn btn-secondary btn-outline' 
               onClick={logout}>
                 <Link to='/' className='font-comfortaa'>Выйти из аккаунта</Link>
               </button>
             )}
             <ThemeSelector />
-            {user && (
+            {(user && !isLibrary) && (
               <div className="indicator">
-                <div className="p-2 rounded-full hover:bg-base-200 
-                transition-colors cursor-pointer">
-                  <LibraryBig className="size-5 btn-ghost" />
+                <div 
+                  className="p-2 rounded-full hover:bg-base-200 transition-colors 
+                  cursor-pointer tooltip tooltip-primary tooltip-right font-comfortaa"
+                  data-tip="Библиотека прочитанного">
+                    <Link to='/library'><LibraryBig className="size-5 btn-ghost" /></Link>
                   <span className="badge badge-sm badge-primary indicator-item">0</span>
                 </div>
               </div>
