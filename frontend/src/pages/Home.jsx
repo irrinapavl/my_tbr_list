@@ -16,14 +16,19 @@ function Home() {
   return (
     <main className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <button className="btn btn-primary rounded-3xl"
+        <button 
+        className="btn btn-primary rounded-3xl"
         onClick={() => document.getElementById("add-book-modal").showModal()}>
           <CirclePlus className="size-5" />
           <span className="font-comfortaa">Добавить книгу</span>
         </button>
-        <button className="btn btn-ghost btn-circle" onClick={fetchBooks}>
+        <div 
+        className="tooltip tooltip-primary tooltip-left font-comfortaa p-0" 
+        data-tip="Обновить список">
+          <button className="btn btn-ghost btn-circle" onClick={fetchBooks}>
           <RefreshCw className="size-5" />
         </button>
+        </div>
       </div>
 
       <AddBookModal />
@@ -38,7 +43,7 @@ function Home() {
           </div>
           <div className="text-center space-y-2 font-comfortaa">
             <h3 className="text-2xl font-semibold ">Пока пусто</h3>
-            <p className="text-gray-500 max-w-sm">
+            <p className="text-xl text-gray-500 max-w-sm">
               Добавьте первую книгу в свой список
             </p>
           </div>

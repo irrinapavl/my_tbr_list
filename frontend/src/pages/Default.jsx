@@ -4,13 +4,12 @@ import { Link } from "react-router-dom"
 
 const Default = () => {
 
-    const { user, error } = useAuthStore()
+    const { user } = useAuthStore()
 
     return (
         <main className="max-w-6xl mx-auto px-4 py-8 font-comfortaa">
-            {error && <p className="text-red-500">{error}</p>}
             {user ? (
-                <div className="min-h-screen flex flex-col items-center p-4">
+                <div className="flex flex-col items-center p-4">
                     <div className="bg-base-100 rounded-full p-6">
                         <BookOpen className="size-12" />
                     </div>
@@ -44,7 +43,7 @@ const Default = () => {
                         <div className="flex">
                             <button className="btn btn-primary btn-lg">
                                 <Link to="/register">
-                                    Зарегистрируйтесь, чтобы добавить первую книгу в свой список
+                                    Зарегистрируйтесь, чтобы начать составлять свой список
                                 </Link>
                                 <Pencil />
                             </button>

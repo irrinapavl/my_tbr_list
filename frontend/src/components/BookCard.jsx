@@ -27,18 +27,26 @@ function BookCard({ book }) {
         className="absoulte top-0 left-0 h-80 object-contain" />
       </figure>
 
-      <div className="card-body flex-col items-center text-center p-0">
+      <div className="card-body flex-col items-center text-center">
         <h2 className="card-title text-5xl font-caveat">{book.name}</h2>
-        <p className="text-2xl font-bold font-comfortaa text-primary">{book.author}</p>
+        <p className="text-2xl font-bold font-comfortaa text-primary mt-3">{book.author}</p>
       </div>
 
-      <div className="card-actions justify-end pe-3 pb-3 mt-3">
-        <button className="btn btn-sm btn-info btn-outline">
+      <div className="card-actions justify-end pe-4 pb-4">
+        <div 
+        className="tooltip tooltip-info tooltip-bottom font-comfortaa me-1" 
+        data-tip="Редактировать">
+          <button className="btn btn-sm btn-info btn-outline">
             <SquarePen className="size-4" onClick={handleEditClick}/>
         </button>
-        <button className='btn btn-sm btn-error btn-outline'>
+        </div>
+        <div 
+        className="tooltip tooltip-error tooltip-bottom font-comfortaa me-1" 
+        data-tip="Удалить">
+          <button className='btn btn-sm btn-error btn-outline'>
             <Trash2 className='size-4' onClick={() => deleteBook(book.id)} />
         </button>
+        </div>
       </div>
 
     </div>
