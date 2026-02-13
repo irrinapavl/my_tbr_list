@@ -12,6 +12,7 @@ const api = axios.create({
 export const useBookStore = create((set, get) => ({
 
     books: [],
+    libCount: null,
     loading: false,
     error: null,  
     formData: {
@@ -53,7 +54,7 @@ export const useBookStore = create((set, get) => ({
         try {
             const { formData } = get()
             await api.put(`/api/mybooks/${formData.id}`, formData)
-            await get().fetchBooks()
+            await get().getBooks()
             get().resetForm()
             toast.success("Книга успешно отредактирована!")
             document.getElementById("edit-book-modal").close()
@@ -95,7 +96,7 @@ export const useBookStore = create((set, get) => ({
     moveToLib: async (id) => {
         set({ loading: true })
         try {
-            await api.post(`/api/mybooks/tolibrary${id}`)
+            await api.put(`/api/mybooks/tolibrary/${id}`)
             set((prev) => ({ books: prev.books.filter((book) => book.id !== id)}))
             toast.success("Книга добавлена в библиотеку")
         } catch (err) {
@@ -122,7 +123,7 @@ export const useBookStore = create((set, get) => ({
     moveToHome: async (id) => {
         set({ loading: true })
         try {
-            await api.post(`/api/mybooks/tohome${id}`)
+            await api.put(`/api/mybooks/tohome/${id}`)
             set((prev) => ({ books: prev.books.filter((book) => book.id !== id)}))
             toast.success("Книга возвращена в список")
         } catch (err) {
@@ -132,4 +133,30 @@ export const useBookStore = create((set, get) => ({
             set({ loading: false })
         }
     },
+
+    getLibCount: async () => {
+        set({ loading: true })
+        try {
+            const response = await api.get(`/api/mybooks/libcount`)
+            set({ libCount: response.data.data, error: null })
+        } catch (err) {
+            console.log("Error counting finished books", err)
+        } finally {
+            set({ loading: false })
+        }
+    },
+
+    updateRating: async (id, newRating) => {
+        try {
+            await api.patch(`/api/mybooks/${id}/${newRating}`)
+            set((prev) => ({ 
+                books: prev.books.map((book) => 
+                    book.id === id ? {...book, rating: newRating} : book
+                )
+            }))
+        } catch (err) {
+            console.log("Error updating rating", err)
+            toast.error("Не удалось сохранить оценку")
+        }
+    }
 }))

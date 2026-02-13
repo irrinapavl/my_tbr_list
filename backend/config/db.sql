@@ -15,6 +15,8 @@ CREATE TABLE books(
     cover VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     finished BOOLEAN DEFAULT FALSE,
+    finished_at TIMESTAMP,
+    rating INTEGER CHECK (rating >= 1 AND rating <= 5);,
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
 
@@ -32,9 +34,14 @@ VALUES
 ('Дюна', 'Фрэнк Герберт', 'https://www.belykrolik.ru/media/catalog/product_images/14900811_1_dyuna.jpg', 1),
 ('Игра престолов', 'Джордж Мартин', 'https://cdn.litres.ru/pub/c/cover/248812.jpg', 1);
 
-CREATE TABLE library(
-    id SERIAL PRIMARY KEY,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    finished BOOLEAN DEFAULT FALSE,
-    list_id INTEGER REFERENCES books(id)
-);
+INSERT INTO books (name, author, cover, user_id) 
+VALUES 
+('Эгоистичный ген', 'Ричард Докинз', 'https://cdn.litres.ru/pub/c/cover/129015.jpg', 2),
+('Джеймс Джойс', 'Улисс', 'https://cdn.litres.ru/pub/c/cover/136177.jpg', 2),
+('Япония изнутри', 'Марина Чижова', 'https://cdn.litres.ru/pub/c/cover/69230518.jpg', 2),
+('Шантарам', 'Грегори Дэвид Робертс', 'https://cdn.litres.ru/pub/c/cover/5815016.jpg', 2),
+('Путь королей', 'Брэндон Сандерсон', 'https://cdn.litres.ru/pub/c/cover/21162101.jpg', 2),
+('Антидемон', 'Серж Винтеркей', 'https://cdn.litres.ru/pub/c/cover/68810199.jpg', 2),
+('Летос', 'Алексей Пехов', 'https://cdn.litres.ru/pub/c/cover/8481292.jpg', 2);
+
+

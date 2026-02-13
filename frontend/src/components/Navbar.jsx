@@ -1,14 +1,21 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import ThemeSelector from "./ThemeSelector.jsx"
 import { useAuthStore } from '../store/useAuthStore.js'
 import { BookOpenText, LibraryBig } from 'lucide-react'
 import { useResolvedPath } from 'react-router-dom'
+import { useBookStore } from '../store/useBookStore.js'
 
 function Navbar() {
 
   const { pathname } = useResolvedPath()
   const isLibrary = pathname === "/library"
   const { user, logout } = useAuthStore()
+  const { libCount, getLibCount } = useBookStore()
+
+  useEffect(() => {
+    getLibCount()
+  }, [getLibCount])
 
   return (
     <div className="bg-base-100/80 backdrop-blur-lg 
@@ -49,7 +56,7 @@ function Navbar() {
                   cursor-pointer tooltip tooltip-primary tooltip-right font-comfortaa"
                   data-tip="Библиотека прочитанного">
                     <Link to='/library'><LibraryBig className="size-5 btn-ghost" /></Link>
-                  <span className="badge badge-sm badge-primary indicator-item">0</span>
+                  <span className="badge badge-sm badge-primary indicator-item">{libCount}</span>
                 </div>
               </div>
             )}

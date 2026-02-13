@@ -1,4 +1,5 @@
 import { SquarePen, Trash2, Check, Undo2 } from 'lucide-react';
+import StarRating from './StarRating.jsx';
 import { useBookStore } from '../store/useBookStore';
 import { useResolvedPath } from 'react-router-dom';
 
@@ -6,7 +7,7 @@ function BookCard({ book }) {
 
   const { pathname } = useResolvedPath()
   const isLibrary = pathname === "/library"
-  const { deleteBook, moveToLib, moveToHome, setFormData } = useBookStore()
+  const { deleteBook, moveToLib, moveToHome, setFormData, getLibCount } = useBookStore()
 
   const handleEditClick = () => {
     setFormData({
@@ -16,6 +17,21 @@ function BookCard({ book }) {
       cover: book.cover
     })
     document.getElementById("edit-book-modal").showModal()
+  }
+
+  const handleMoveToLib = async () => {
+    await moveToLib(book.id)
+    await getLibCount()
+  }
+
+  const handleMoveToHome = async () => {
+    await moveToHome(book.id)
+    await getLibCount()
+  }
+
+  const handleDeleteBook = async () => {
+    await deleteBook(book.id)
+    await getLibCount()
   }
 
   return (
@@ -41,7 +57,7 @@ function BookCard({ book }) {
             className="tooltip tooltip-primary tooltip-bottom font-comfortaa" 
             data-tip="Вернуть в список">
               <button className="btn btn-sm btn-primary btn-outline">
-                <Undo2 className="size-4" onClick={() => moveToHome(book.id)}/>
+                <Undo2 className="size-4" onClick={handleMoveToHome}/>
               </button>
           </div>
           ) : (
@@ -49,7 +65,7 @@ function BookCard({ book }) {
             className="tooltip tooltip-success tooltip-bottom font-comfortaa" 
             data-tip="Переместить в библиотеку">
               <button className="btn btn-sm btn-success btn-outline">
-                <Check className="size-4" onClick={() => moveToLib(book.id)}/>
+                <Check className="size-4" onClick={handleMoveToLib}/>
               </button>
           </div>
           )}
@@ -62,19 +78,13 @@ function BookCard({ book }) {
           </div>
         </div>
         {isLibrary && (
-        <div className="rating mb-2 gap-1">
-          <input type="radio" name={book.id} className="mask mask-star-2 bg-secondary" aria-label="1 star" />
-          <input type="radio" name={book.id} className="mask mask-star-2 bg-secondary" aria-label="2 star" />
-          <input type="radio" name={book.id} className="mask mask-star-2 bg-secondary" aria-label="3 star" />
-          <input type="radio" name={book.id} className="mask mask-star-2 bg-secondary" aria-label="4 star" />
-          <input type="radio" name={book.id} className="mask mask-star-2 bg-secondary" aria-label="5 star" />
-        </div>
+          <StarRating book={book} />
         )}
         <div 
           className="tooltip tooltip-error tooltip-bottom font-comfortaa" 
           data-tip="Удалить">
             <button className='btn btn-sm btn-error btn-outline'>
-              <Trash2 className='size-4' onClick={() => deleteBook(book.id)} />
+              <Trash2 className='size-4' onClick={handleDeleteBook} />
             </button>
         </div>
       </div>

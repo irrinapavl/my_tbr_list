@@ -126,7 +126,7 @@ export const moveToLib = async(req, res) => {
 
     try {
         const movedBook = await pool.query(
-            'UPDATE books SET finished = TRUE WHERE id = $1 AND user_id = $2 RETURNING *', 
+            'UPDATE books SET finished = TRUE, finished_at = NOW() WHERE id = $1 AND user_id = $2 RETURNING *', 
             [id, user_id]
         )
 
@@ -157,7 +157,7 @@ export const getLibBooks = async (req, res) => {
 
     try {
         const books = await pool.query(
-            'SELECT * FROM books WHERE finished = TRUE AND user_id = $1 ORDER BY created_at DESC',
+            'SELECT * FROM books WHERE finished = TRUE AND user_id = $1 ORDER BY finished_at DESC',
             [user_id]
         )
         res.status(200).json({ 
@@ -181,7 +181,7 @@ export const moveToHome = async(req, res) => {
 
     try {
         const movedBook = await pool.query(
-            'UPDATE books SET finished = FALSE WHERE id = $1 AND user_id = $2 RETURNING *', 
+            'UPDATE books SET finished = FALSE, finished_at = NULL, rating = NULL WHERE id = $1 AND user_id = $2 RETURNING *', 
             [id, user_id]
         )
 
@@ -199,6 +199,62 @@ export const moveToHome = async(req, res) => {
         
     } catch (err) {
         console.error("Error moving a book", err)
+        res.status(500).json({ 
+            success: false, 
+            message: "Internal Server Error"
+        })
+    }
+}
+
+export const getLibCount = async (req, res) => {
+
+    const user_id = req.user.id
+    
+    try {
+        const count = await pool.query(
+            'SELECT COUNT(finished_at) FROM books WHERE user_id = $1',
+            [user_id]
+        )
+
+        res.status(200).json({ 
+            success: true, 
+            data: count.rows[0].count
+        })
+
+    } catch (err) {
+        console.log("Error getting library count", err)
+        res.status(500).json({ 
+            success: false, 
+            message: "Internal Server Error"
+        })
+    }
+}
+
+export const updateRating = async (req, res) => {
+
+    const { id, rating } = req.params
+    const user_id = req.user.id
+
+    try {
+        const updated = await pool.query(
+            'UPDATE books SET rating = $1 WHERE id = $2 AND user_id = $3 RETURNING id, rating',
+            [rating, id, user_id]
+        )
+
+        if (updated.rows.length === 0) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "Book not found"
+            })
+        }
+
+        res.status(200).json({ 
+            success: true, 
+            data: updated.rows[0]
+        })
+
+    } catch (err) {
+        console.log("Error updating rating", err)
         res.status(500).json({ 
             success: false, 
             message: "Internal Server Error"
