@@ -17,9 +17,7 @@ export const protect = async (req, res, next) => {
     )
 
     if (user.rows.length === 0) {
-      return res
-        .status(401)
-        .json({ message: "Not authorized, user not found" })
+      return res.status(401).json({ message: "Not authorized, user not found" })
     }
 
     req.user = user.rows[0]

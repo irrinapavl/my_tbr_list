@@ -11,152 +11,152 @@ const api = axios.create({
 
 export const useBookStore = create((set, get) => ({
 
-    books: [],
-    libCount: null,
-    loading: false,
-    error: null,  
-    formData: {
-        name: "",
-        author: "",
-        cover: ""
-    },
+  books: [],
+  libCount: null,
+  loading: false,
+  error: null,  
+  formData: {
+    name: "",
+    author: "",
+    cover: ""
+  },
 
-    setFormData: (formData) => set({ formData }),
-    resetForm: () => set({ 
-        formData: { 
-            id: null,
-            name: "", 
-            author: "", 
-            cover: "" 
-        }
-    }),
-
-    addBook: async (e) => {
-        e.preventDefault()
-        set({ loading: true })
-        try {
-            const { formData } = get()
-            await api.post(`/api/mybooks`, formData)
-            await get().fetchBooks()
-            get().resetForm()
-            toast.success("Книга успешно добавлена в список!")
-            document.getElementById("add-book-modal").close()
-        } catch (err) {
-            console.log("Error adding a book", err)
-            toast.error("Извините, что-то пошло не так")
-        } finally {
-            set({ loading: false })
-        }
-    },
-
-    editBook: async () => {
-        set({ loading: true })
-        try {
-            const { formData } = get()
-            await api.put(`/api/mybooks/${formData.id}`, formData)
-            await get().getBooks()
-            get().resetForm()
-            toast.success("Книга успешно отредактирована!")
-            document.getElementById("edit-book-modal").close()
-        } catch (err) {
-            console.log("Error editing a book", err)
-            toast.error("Извините, что-то пошло не так")
-        } finally {
-            set({ loading: false })
-        }
-    },
-
-    getBooks: async () => {
-        set({ loading: true })
-        try {
-            const response = await api.get(`/api/mybooks`)
-            set({ books: response.data.data, error: null })
-        } catch (err) {
-            if (err.status == 429) set({ error: "Rate limit exceeded", books: [] })
-            else set({ error: "Error fetching the books", books: [] })
-        } finally {
-            set({ loading: false })
-        }
-    },
-    
-    deleteBook: async (id) => {
-        set({ loading: true })
-        try {
-            await api.delete(`/api/mybooks/${id}`)
-            set((prev) => ({ books: prev.books.filter((book) => book.id !== id)}))
-            toast.success("Книга успешно удалена")
-        } catch (err) {
-            console.log("Error deleting a book", err)
-            toast.error("Не получилось удалить книгу...")
-        } finally {
-            set({ loading: false })
-        }
-    },
-
-    moveToLib: async (id) => {
-        set({ loading: true })
-        try {
-            await api.put(`/api/mybooks/tolibrary/${id}`)
-            set((prev) => ({ books: prev.books.filter((book) => book.id !== id)}))
-            toast.success("Книга добавлена в библиотеку")
-        } catch (err) {
-            console.log("Error moving a book to the library", err)
-            toast.error("Не удалось переместить в библиотеку")
-        } finally {
-            set({ loading: false })
-        }
-    },
-
-    getLibBooks: async () => {
-        set({ loading: true })
-        try {
-            const response = await api.get(`/api/mybooks/library`)
-            set({ books: response.data.data, error: null })
-        } catch (err) {
-            if (err.status == 429) set({ error: "Rate limit exceeded", books: [] })
-            else set({ error: "Error fetching the books", books: [] })
-        } finally {
-            set({ loading: false })
-        }
-    },
-
-    moveToHome: async (id) => {
-        set({ loading: true })
-        try {
-            await api.put(`/api/mybooks/tohome/${id}`)
-            set((prev) => ({ books: prev.books.filter((book) => book.id !== id)}))
-            toast.success("Книга возвращена в список")
-        } catch (err) {
-            console.log("Error moving a book to home", err)
-            toast.error("Не удалось вернуть в список")
-        } finally {
-            set({ loading: false })
-        }
-    },
-
-    getLibCount: async () => {
-        set({ loading: true })
-        try {
-            const response = await api.get(`/api/mybooks/libcount`)
-            set({ libCount: response.data.data, error: null })
-        } catch (err) {
-            console.log("Error counting finished books", err)
-        } finally {
-            set({ loading: false })
-        }
-    },
-
-    updateRating: async (id, newRating) => {
-        try {
-            await api.patch(`/api/mybooks/${id}/${newRating}`)
-            set((prev) => ({ 
-                books: prev.books.map((book) => 
-                    book.id === id ? {...book, rating: newRating} : book
-                )
-            }))
-        } catch (err) {
-            console.log("Error updating rating", err)
-            toast.error("Не удалось сохранить оценку")
-        }
+  setFormData: (formData) => set({ formData }),
+  resetForm: () => set({ 
+    formData: { 
+      id: null,
+      name: "", 
+      author: "", 
+      cover: "" 
     }
+  }),
+
+  addBook: async (e) => {
+    e.stateentDefault()
+    set({ loading: true })
+    try {
+      const { formData } = get()
+      await api.post(`/api/mybooks`, formData)
+      await get().fetchBooks()
+      get().resetForm()
+      toast.success("Книга успешно добавлена в список!")
+      document.getElementById("add-book-modal").close()
+    } catch (err) {
+      console.log("Error adding a book", err)
+      toast.error("Извините, что-то пошло не так")
+    } finally {
+      set({ loading: false })
+    }
+  },
+
+  editBook: async () => {
+    set({ loading: true })
+    try {
+      const { formData } = get()
+      await api.put(`/api/mybooks/${formData.id}`, formData)
+      await get().getBooks()
+      get().resetForm()
+      toast.success("Книга успешно отредактирована!")
+      document.getElementById("edit-book-modal").close()
+    } catch (err) {
+      console.log("Error editing a book", err)
+      toast.error("Извините, что-то пошло не так")
+    } finally {
+      set({ loading: false })
+    }
+  },
+
+  getBooks: async () => {
+    set({ loading: true })
+    try {
+      const response = await api.get(`/api/mybooks`)
+      set({ books: response.data.data, error: null })
+    } catch (err) {
+      if (err.status == 429) set({ error: "Превышен лимит запросов", books: [] })
+      else set({ error: "Не удалось загрузить книги", books: [] })
+    } finally {
+      set({ loading: false })
+    }
+  },
+  
+  deleteBook: async (id) => {
+    set({ loading: true })
+    try {
+      await api.delete(`/api/mybooks/${id}`)
+      set((state) => ({ books: state.books.filter((book) => book.id !== id)}))
+      toast.success("Книга успешно удалена")
+    } catch (err) {
+      console.log("Error deleting a book", err)
+      toast.error("Не получилось удалить книгу...")
+    } finally {
+      set({ loading: false })
+    }
+  },
+
+  moveToLib: async (id) => {
+    set({ loading: true })
+    try {
+      await api.put(`/api/mybooks/tolibrary/${id}`)
+      set((state) => ({ books: state.books.filter((book) => book.id !== id)}))
+      toast.success("Книга добавлена в библиотеку")
+    } catch (err) {
+      console.log("Error moving a book to the library", err)
+      toast.error("Не удалось переместить в библиотеку")
+    } finally {
+      set({ loading: false })
+    }
+  },
+
+  getLibBooks: async () => {
+    set({ loading: true })
+    try {
+      const response = await api.get(`/api/mybooks/library`)
+      set({ books: response.data.data, error: null })
+    } catch (err) {
+      if (err.status == 429) set({ error: "Превышен лимит запросов", books: [] })
+      else set({ error: "Не удалось загрузить книги", books: [] })
+    } finally {
+      set({ loading: false })
+    }
+  },
+
+  moveToHome: async (id) => {
+    set({ loading: true })
+    try {
+      await api.put(`/api/mybooks/tohome/${id}`)
+      set((state) => ({ books: state.books.filter((book) => book.id !== id)}))
+      toast.success("Книга возвращена в список")
+    } catch (err) {
+      console.log("Error moving a book to home", err)
+      toast.error("Не удалось вернуть в список")
+    } finally {
+      set({ loading: false })
+    }
+  },
+
+  getLibCount: async () => {
+    set({ loading: true })
+    try {
+      const response = await api.get(`/api/mybooks/libcount`)
+      set({ libCount: response.data.data, error: null })
+    } catch (err) {
+      console.log("Error counting finished books", err)
+    } finally {
+      set({ loading: false })
+    }
+  },
+
+  updateRating: async (id, newRating) => {
+    try {
+      await api.patch(`/api/mybooks/${id}/${newRating}`)
+      set((state) => ({ 
+        books: state.books.map((book) => 
+          book.id === id ? {...book, rating: newRating} : book
+        )
+      }))
+    } catch (err) {
+      console.log("Error updating rating", err)
+      toast.error("Не удалось сохранить оценку")
+    }
+  }
 }))

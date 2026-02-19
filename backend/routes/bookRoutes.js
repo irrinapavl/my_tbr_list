@@ -1,6 +1,7 @@
 import express from 'express'
-import { getBooks, createBook, updateBook, deleteBook, moveToLib, 
-    getLibBooks, moveToHome, getLibCount, updateRating } from '../controllers/bookController.js'
+import { getBooks, createBook, updateBook, deleteBook, 
+         moveToLib, getLibBooks, moveToHome, getLibCount, 
+         updateRating } from '../controllers/bookController.js'
 
 const router = express.Router()
 

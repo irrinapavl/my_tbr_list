@@ -1,4 +1,5 @@
-import { useState } from "react"
+import validator from "email-validator"
+import toast from "react-hot-toast"
 import { useAuthStore } from "../store/useAuthStore"
 import { useNavigate, Link } from "react-router-dom"
 
@@ -6,12 +7,21 @@ const Register = () => {
 
   const { formData, setFormData, register, loading } = useAuthStore()
   const navigate = useNavigate()
+  const emailInput = document.getElementById("emailInput")
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    const success = await register(formData)
-    if (success) {
-      navigate('/')
+    if (validator.validate(formData.email)) {
+      const success = await register(formData)
+      if (success) {
+        navigate('/check-inbox',  { state: { email: formData.email } })
+      }
+    } else {
+      emailInput.classList.add("input-error")
+      toast.error("Пожалуйста, проверьте адрес почты")
+      setTimeout(() => {
+        emailInput.classList.remove("input-error")
+      }, 4000)
     }
   }
 
@@ -34,7 +44,8 @@ const Register = () => {
             <label className="label text-lg">Почта</label>
             <input 
             type="email" 
-            className="input" 
+            className="input"
+            id="emailInput" 
             placeholder="vasyapupkin@yandex.ru"
             value={formData.email} 
             onChange={(e) => setFormData({...formData, email: e.target.value })} />

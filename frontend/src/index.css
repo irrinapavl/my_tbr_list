@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-    themes:
-      night,
-      caramellatte,
-      forest,
-      synthwave,
-      lemonade,
-      valentine,
-      emerald,
-      dracula,
-      nord,
-      sunset,
-      fantasy,
-      abyss,
-      cmyk,
-      autumn,
-      acid,
-      winter,
-      garden
-  }
+  themes:
+    night,
+    caramellatte,
+    forest,
+    synthwave,
+    lemonade,
+    valentine,
+    emerald,
+    dracula,
+    nord,
+    sunset,
+    fantasy,
+    abyss,
+    cmyk,
+    autumn,
+    acid,
+    winter,
+    garden
+}
 
 @font-face {
   font-family: Comfortaa;

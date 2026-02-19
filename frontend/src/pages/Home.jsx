@@ -7,15 +7,22 @@ import EditBookModal from "../components/EditBookModal"
 
 function Home() {
 
-  const { books, loading, getBooks } = useBookStore()
+  const { books, loading, getBooks, getLibCount, error } = useBookStore()
 
   useEffect(() => {
     getBooks()
   }, [getBooks])
 
+  useEffect(() => {
+    getLibCount()
+  }, [getLibCount])
+
   return (
     <main className="max-w-6xl mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col items-center">
+        <span className="font-comfortaa text-red-500">{error}</span>
+      </div>
+      <div className="flex justify-between items-center">
         <button 
           className="btn btn-primary rounded-3xl"
           onClick={() => document.getElementById("add-book-modal").showModal()}>
@@ -34,7 +41,7 @@ function Home() {
       <AddBookModal />
       <EditBookModal />
       
-      {books.length === 0 && !loading && (
+      {(books.length === 0 && !loading) && (
         <div className="flex flex-col justify-center items-center h-96 space-y-4">
           <div className="bg-base-100 rounded-full p-6">
             <BookOpen className="size-12" />
@@ -53,7 +60,7 @@ function Home() {
         <div className="loading loading-spinner loading-lg" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
           {Array.isArray(books) && books.map((book) => (
             <BookCard key={book.id} book={book} />
           ))}

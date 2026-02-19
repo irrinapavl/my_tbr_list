@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import ThemeSelector from "./ThemeSelector.jsx"
 import { useAuthStore } from '../store/useAuthStore.js'
-import { BookOpenText, LibraryBig } from 'lucide-react'
+import { BookOpenText, LibraryBig, KeyRound } from 'lucide-react'
 import { useResolvedPath } from 'react-router-dom'
 import { useBookStore } from '../store/useBookStore.js'
 
@@ -10,6 +10,9 @@ function Navbar() {
 
   const { pathname } = useResolvedPath()
   const isLibrary = pathname === "/library"
+  const isCheckInbox = pathname === "/check-inbox"
+  const isVerifyEmail = pathname === "/verify-email"
+  const isChangePassword = pathname === "/change-password"
   const { user, logout } = useAuthStore()
   const { libCount, getLibCount } = useBookStore()
 
@@ -22,7 +25,6 @@ function Navbar() {
     border-b border-base-content sticky top-0 z-50">
       <div className="max-w-6xl mx-auto">
         <nav className="navbar px-4 min-h-16 justify-between">
-          {/* LOGO */}
           <div className="flex-1 lg:flex-none">
             <Link to="/" className="hover:opacity-80 tranisiton-opacity">
               <div className="flex items-center gap-2">
@@ -34,14 +36,25 @@ function Navbar() {
               </div>
             </Link>
           </div>
-          {isLibrary && (
-            <button className='btn btn-primary btn-outline me-10'>
-              <Link to='/mybooks' className='font-comfortaa'>Вернуться к списку</Link>
+          {(isLibrary || isChangePassword) && (
+            <button className='btn btn-primary btn-outline ms-8'>
+              <Link to='/mybooks' className='font-comfortaa'>К списку книг</Link>
             </button>
           )}
-          {/* RIGHT SECTION */}
-          <div className="flex items-center gap-4">
-            {user && (
+          <div className="flex gap-4">
+            {(user && !isChangePassword) && (
+              <div className="indicator">
+                <div 
+                  className="p-2 rounded-full hover:bg-base-200 transition-colors 
+                  cursor-pointer tooltip tooltip-primary tooltip-left font-comfortaa"
+                  data-tip="Изменить пароль">
+                    <Link to='/change-password'>
+                      <KeyRound className="btn-ghost"/>
+                    </Link>
+                </div>
+              </div>
+              )}
+            {(user &&
               <button 
               className='btn btn-secondary btn-outline' 
               onClick={logout}>
@@ -49,13 +62,13 @@ function Navbar() {
               </button>
             )}
             <ThemeSelector />
-            {(user && !isLibrary) && (
+            {(user && !isLibrary && !isCheckInbox && !isVerifyEmail) && (
               <div className="indicator">
                 <div 
                   className="p-2 rounded-full hover:bg-base-200 transition-colors 
                   cursor-pointer tooltip tooltip-primary tooltip-right font-comfortaa"
                   data-tip="Библиотека прочитанного">
-                    <Link to='/library'><LibraryBig className="size-5 btn-ghost" /></Link>
+                    <Link to='/library'><LibraryBig className="btn-ghost" /></Link>
                   <span className="badge badge-sm badge-primary indicator-item">{libCount}</span>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 import { rateLimit } from 'express-rate-limit'
 
-const limiter = rateLimit({
+export const generalLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000,
 	limit: 100,
 	standardHeaders: true,
@@ -8,4 +8,7 @@ const limiter = rateLimit({
 	ipv6Subnet: 48, 
 })
 
-export default limiter
+export const resendLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 3,
+})

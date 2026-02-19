@@ -15,7 +15,6 @@ const Login = () => {
   }
 
   return (
-
     <main className="max-w-6xl mx-auto px-4 py-8 font-comfortaa flex justify-center">
       <form onSubmit={handleSubmit}>
         <div className="form-conrol mb-3">
@@ -37,7 +36,7 @@ const Login = () => {
             onChange={(e) => setFormData({...formData, password: e.target.value })} />
           </fieldset>
         </div>
-        <div className="form-conrol mb-3 flex flex-col items-center">
+        <div className="form-conrol flex flex-col items-center">
           <button
               type="submit"
               className="btn btn-primary min-w-30"
@@ -50,14 +49,22 @@ const Login = () => {
               )}    
           </button>
         </div>
-        <p className="mt-4 text-center">
+        <div className="flex flex-col items-center">
+          <p className="mt-4">
           Нет аккаунта? 
           <Link to="/register">
             <span className="link ms-2 hover:opacity-80 tranisiton-opacity">
               Регистрация
             </span>
           </Link>
-        </p>
+          </p>
+          <button 
+            type="button"
+            className="btn btn-primary btn-outline h-7 mt-2"
+            onClick={() => navigate('/recover-password')}>
+              Забыли пароль?
+          </button>
+        </div>
       </form>
     </main>
   )
