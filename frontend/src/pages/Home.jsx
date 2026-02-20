@@ -5,7 +5,7 @@ import BookCard from "../components/BookCard"
 import AddBookModal from "../components/AddBookModal"
 import EditBookModal from "../components/EditBookModal"
 
-function Home() {
+function TBR() {
 
   const { books, loading, getBooks, getLibCount, error } = useBookStore()
 
@@ -18,11 +18,11 @@ function Home() {
   }, [getLibCount])
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8">
+    <main className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex flex-col items-center">
         <span className="font-comfortaa text-red-500">{error}</span>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between px-1">
         <button 
           className="btn btn-primary rounded-3xl"
           onClick={() => document.getElementById("add-book-modal").showModal()}>
@@ -60,7 +60,8 @@ function Home() {
         <div className="loading loading-spinner loading-lg" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 
+        lg:grid-cols-4 gap-6 mt-5 place-items-center">
           {Array.isArray(books) && books.map((book) => (
             <BookCard key={book.id} book={book} />
           ))}
@@ -70,4 +71,4 @@ function Home() {
   )
 }
 
-export default Home
+export default TBR

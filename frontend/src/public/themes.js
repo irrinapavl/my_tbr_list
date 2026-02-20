@@ -2,7 +2,7 @@ export const THEMES = [
   {
     name: "night",
     label: "Ночь",
-    colors: ["#d5d5d5", "#1cb3f9", "#070080"],
+    colors: ["#42bdff", "#847df0", "#070080"],
   },
   {
     name: "caramellatte",

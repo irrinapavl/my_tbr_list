@@ -23,7 +23,7 @@ function Navbar() {
   return (
     <div className="bg-base-100/80 backdrop-blur-lg 
     border-b border-base-content sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <nav className="navbar px-4 min-h-16 justify-between">
           <div className="flex-1 lg:flex-none">
             <Link to="/" className="hover:opacity-80 tranisiton-opacity">
@@ -37,8 +37,8 @@ function Navbar() {
             </Link>
           </div>
           {(isLibrary || isChangePassword) && (
-            <button className='btn btn-primary btn-outline ms-8'>
-              <Link to='/mybooks' className='font-comfortaa'>К списку книг</Link>
+            <button className='btn btn-primary btn-outline ms-7'>
+              <Link to='/my-tbr-list' className='font-comfortaa'>К списку книг</Link>
             </button>
           )}
           <div className="flex gap-4">

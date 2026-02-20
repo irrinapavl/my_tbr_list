@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import { useThemeStore } from "./store/useThemeStore"
 import { useAuthStore } from "./store/useAuthStore"
 import Navbar from "./components/Navbar"
-import Home from "./pages/Home"
+import TBR from "./pages/Home"
 import Welcome from "./pages/Welcome"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
@@ -36,7 +36,7 @@ function App() {
           <Route path="/recover-password" element={<RecoverPassword /> } />
           <Route path="/verify-recovery" element={<VerifyRecovery /> } />
           <Route path="/set-new-password" element={<SetNewPassword /> } />
-          <Route path="/mybooks" element={<Home /> } />
+          <Route path="/my-tbr-list" element={<TBR /> } />
           <Route path="/library" element={<Library /> } />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="*" element={<Welcome />} />

@@ -35,22 +35,26 @@ function BookCard({ book }) {
   }
 
   return (
-    <div className="card bg-base-100 shadow-xl 
-    hover:shadow-2-xl transition-shadow duration-300">
+    <div className="card bg-base-100 w-70">
 
-      <figure className="relative bg-white h-96">
+      <figure>
         <img 
         src={book.cover} 
         alt={book.name}
-        className="absoulte top-0 left-0 h-80 object-contain" />
+        className="h-105 w-70"/>
       </figure>
 
-      <div className="card-body flex-col items-center text-center">
-        <h2 className="card-title text-5xl font-caveat">{book.name}</h2>
-        <p className="text-2xl font-bold font-comfortaa text-primary mt-3">{book.author}</p>
+      <div className="flex flex-col justify-center items-center text-center p-3 mt-4">
+        <h2 className="text-4xl font-caveat font-bold">{book.name}</h2>
+        <p className="text-xl font-bold font-comfortaa text-primary mt-3">{book.author}</p>
+        <div className="my-3">
+          {isLibrary && (
+            <StarRating book={book} />
+          )}
+        </div>
       </div>
 
-      <div className="card-actions justify-between pb-4 px-4">
+      <div className="card-actions justify-between pb-3 px-3 mt-auto">
         <div className="justify-end">
           {isLibrary ? (
           <div 
@@ -77,9 +81,6 @@ function BookCard({ book }) {
               </button>
           </div>
         </div>
-        {isLibrary && (
-          <StarRating book={book} />
-        )}
         <div 
           className="tooltip tooltip-error tooltip-bottom font-comfortaa" 
           data-tip="Удалить">

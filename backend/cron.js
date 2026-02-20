@@ -2,7 +2,7 @@ import cron from 'node-cron'
 import pool from './config/db.js'
 
 export const startDbCleanup = () => {
-  cron.schedule('0 12 * * *', async () => {
+  cron.schedule('0 4 * * *', async () => {
 
     console.log('Starting database cleanup...')
 

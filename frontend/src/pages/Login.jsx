@@ -1,17 +1,17 @@
+import { useState } from "react"
 import { useAuthStore } from "../store/useAuthStore"
 import { useNavigate, Link } from "react-router-dom"
 
 const Login = () => {
 
-  const { formData, setFormData, login, loading } = useAuthStore()
+  const { login, loading } = useAuthStore()
   const navigate = useNavigate()
+  const [form,  setForm] = useState({ email: '', password: '' })
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    const success = await login(formData)
-    if (success) {
-      navigate('/')
-    }
+    const success = await login(form)
+    if (success) navigate('/')
   }
 
   return (
@@ -25,22 +25,22 @@ const Login = () => {
             <input 
             type="email" 
             className="input" 
-            value={formData.email} 
-            onChange={(e) => setFormData({...formData, email: e.target.value })} />
+            value={form.email} 
+            onChange={(e) => setForm({...form, email: e.target.value })} />
 
-            <label className="label text-lg">Пароль</label>
+            <label className="label text-lg mt-2">Пароль</label>
             <input 
             type="password" 
             className="input" 
-            value={formData.password} 
-            onChange={(e) => setFormData({...formData, password: e.target.value })} />
+            value={form.password} 
+            onChange={(e) => setForm({...form, password: e.target.value })} />
           </fieldset>
         </div>
         <div className="form-conrol flex flex-col items-center">
           <button
               type="submit"
               className="btn btn-primary min-w-30"
-              disabled={ !formData.email || !formData.password || loading }
+              disabled={ !form.email || !form.password || loading }
               >
               {loading ? (
                   <span className="loading loading-spinner loading-sm" />

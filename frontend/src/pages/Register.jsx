@@ -1,26 +1,28 @@
 import validator from "email-validator"
 import toast from "react-hot-toast"
+import { useRef, useState } from "react"
 import { useAuthStore } from "../store/useAuthStore"
 import { useNavigate, Link } from "react-router-dom"
 
 const Register = () => {
 
-  const { formData, setFormData, register, loading } = useAuthStore()
+  const { register, loading } = useAuthStore()
   const navigate = useNavigate()
-  const emailInput = document.getElementById("emailInput")
+  const emailRef = useRef(null)
+  const [form, setForm] = useState({ username: '', email: '', password: '' })
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    if (validator.validate(formData.email)) {
-      const success = await register(formData)
+    if (validator.validate(form.email)) {
+      const success = await register(form)
       if (success) {
-        navigate('/check-inbox',  { state: { email: formData.email } })
+        navigate('/check-inbox',  { state: { email: form.email } })
       }
     } else {
-      emailInput.classList.add("input-error")
+      emailRef.current?.classList.add("input-error")
       toast.error("Пожалуйста, проверьте адрес почты")
       setTimeout(() => {
-        emailInput.classList.remove("input-error")
+        emailRef.current?.classList.remove("input-error")
       }, 4000)
     }
   }
@@ -38,32 +40,32 @@ const Register = () => {
             type="text" 
             className="input" 
             placeholder="Как к Вам обращаться?"
-            value={formData.username} 
-            onChange={(e) => setFormData({...formData, username: e.target.value })}/>
+            value={form.username} 
+            onChange={(e) => setForm({...form, username: e.target.value })}/>
 
-            <label className="label text-lg">Почта</label>
+            <label className="label text-lg mt-2">Почта</label>
             <input 
             type="email" 
             className="input"
-            id="emailInput" 
+            ref={emailRef}
             placeholder="vasyapupkin@yandex.ru"
-            value={formData.email} 
-            onChange={(e) => setFormData({...formData, email: e.target.value })} />
+            value={form.email} 
+            onChange={(e) => setForm({...form, email: e.target.value })} />
 
-            <label className="label text-lg">Пароль</label>
+            <label className="label text-lg mt-2">Пароль</label>
             <input 
             type="password" 
             className="input" 
             placeholder="Ваш список — только Ваш"
-            value={formData.password} 
-            onChange={(e) => setFormData({...formData, password: e.target.value })} />
+            value={form.password} 
+            onChange={(e) => setForm({...form, password: e.target.value })} />
           </fieldset>
         </div>
         <div className="form-conrol mb-3 flex flex-col items-center">
           <button
               type="submit"
               className="btn btn-primary min-w-30"
-              disabled={ !formData.username || !formData.email || !formData.password || loading }
+              disabled={ !form.username || !form.email || !form.password || loading }
               >
               {loading ? (
                   <span className="loading loading-spinner loading-sm" />

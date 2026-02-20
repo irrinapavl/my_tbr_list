@@ -13,7 +13,7 @@ const Library = () => {
   }, [getLibBooks])
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8">
+    <main className="max-w-7xl mx-auto px-4 py-8">
       {books.length === 0 && !loading && (
         <div className="flex flex-col justify-center items-center h-96 space-y-4 mt-10">
           <div className="bg-base-100 rounded-full p-6">
@@ -32,7 +32,8 @@ const Library = () => {
           <div className="loading loading-spinner loading-lg" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 
+        lg:grid-cols-4 gap-6 mt-5 place-items-center">
           {Array.isArray(books) && books.map((book) => (
             <BookCard key={book.id} book={book} />
           ))}

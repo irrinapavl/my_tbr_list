@@ -25,7 +25,7 @@ const Welcome = () => {
               Добро пожаловать, {user.username}!
             </h1>
             <button  className="btn btn-primary btn-lg mt-3">
-              <Link to="/mybooks">Перейти к списку книг</Link>
+              <Link to="/my-tbr-list">Перейти к списку книг</Link>
             </button>
           </div>
         </div>

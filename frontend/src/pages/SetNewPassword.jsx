@@ -65,7 +65,7 @@ const SetNewPassword = () => {
             value={formData.newPass} 
             onChange={(e) => setFormData({...formData, newPass: e.target.value })} />
 
-            <label className="label text-lg">Повторите новый пароль</label>
+            <label className="label text-lg mt-2">Повторите новый пароль</label>
             <input 
             type="password" 
             className="input text-lg"

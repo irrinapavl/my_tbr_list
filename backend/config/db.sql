@@ -49,10 +49,10 @@ VALUES
 
 INSERT INTO books (name, author, cover, user_id) 
 VALUES 
-('Эгоистичный ген', 'Ричард Докинз', 'https://cdn.litres.ru/pub/c/cover/129015.jpg', 2),
-('Джеймс Джойс', 'Улисс', 'https://cdn.litres.ru/pub/c/cover/136177.jpg', 2),
-('Япония изнутри', 'Марина Чижова', 'https://cdn.litres.ru/pub/c/cover/69230518.jpg', 2),
-('Шантарам', 'Грегори Дэвид Робертс', 'https://cdn.litres.ru/pub/c/cover/5815016.jpg', 2),
-('Путь королей', 'Брэндон Сандерсон', 'https://cdn.litres.ru/pub/c/cover/21162101.jpg', 2),
-('Антидемон', 'Серж Винтеркей', 'https://cdn.litres.ru/pub/c/cover/68810199.jpg', 2),
-('Летос', 'Алексей Пехов', 'https://cdn.litres.ru/pub/c/cover/8481292.jpg', 2);
+('Эгоистичный ген', 'Ричард Докинз', 'https://cdn.litres.ru/pub/c/cover/129015.jpg', 21),
+('Джеймс Джойс', 'Улисс', 'https://cdn.litres.ru/pub/c/cover/136177.jpg', 21),
+('Япония изнутри', 'Марина Чижова', 'https://cdn.litres.ru/pub/c/cover/69230518.jpg', 21),
+('Шантарам', 'Грегори Дэвид Робертс', 'https://cdn.litres.ru/pub/c/cover/5815016.jpg', 21),
+('Путь королей', 'Брэндон Сандерсон', 'https://cdn.litres.ru/pub/c/cover/21162101.jpg', 21),
+('Антидемон', 'Серж Винтеркей', 'https://cdn.litres.ru/pub/c/cover/68810199.jpg', 21),
+('Летос', 'Алексей Пехов', 'https://cdn.litres.ru/pub/c/cover/8481292.jpg', 21);
