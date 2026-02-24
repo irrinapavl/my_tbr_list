@@ -20,26 +20,30 @@ export const useBookStore = create((set, get) => ({
     author: "",
     cover: ""
   },
-
   setFormData: (formData) => set({ formData }),
   resetForm: () => set({ 
     formData: { 
       id: null,
       name: "", 
       author: "", 
-      cover: "" 
+      cover: ""
     }
   }),
+  commentData: {
+    id: null,
+    comment: ""
+  },
+  setCommentData: (comment) => set({ commentData: comment }),
 
   addBook: async (e) => {
-    e.stateentDefault()
+    e.preventDefault()
     set({ loading: true })
     try {
       const { formData } = get()
       await api.post(`/api/mybooks`, formData)
-      await get().fetchBooks()
+      await get().getBooks()
       get().resetForm()
-      toast.success("Книга успешно добавлена в список!")
+      toast.success("Книга добавлена в список!")
       document.getElementById("add-book-modal").close()
     } catch (err) {
       console.log("Error adding a book", err)
@@ -56,7 +60,7 @@ export const useBookStore = create((set, get) => ({
       await api.put(`/api/mybooks/${formData.id}`, formData)
       await get().getBooks()
       get().resetForm()
-      toast.success("Книга успешно отредактирована!")
+      toast.success("Книга отредактирована!")
       document.getElementById("edit-book-modal").close()
     } catch (err) {
       console.log("Error editing a book", err)
@@ -157,6 +161,20 @@ export const useBookStore = create((set, get) => ({
     } catch (err) {
       console.log("Error updating rating", err)
       toast.error("Не удалось сохранить оценку")
+    }
+  }, 
+
+  commentBook: async() => {
+    set({ loading: true })
+    try {
+      const { commentData } = get()
+      await api.patch(`/api/mybooks/comment/${commentData.id}`, commentData)
+      await get().getLibBooks()
+      toast.success("Отзыв успешно сохранен!")
+      document.getElementById("comment-book-modal").close()
+    } catch (err) {
+      console.log("Error commenting", err)
+      toast.error("Не удалось сохранить отзыв")
     }
   }
 }))

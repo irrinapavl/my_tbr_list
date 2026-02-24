@@ -1,4 +1,4 @@
-import { SquarePen, Trash2, Check, Undo2 } from 'lucide-react';
+import { SquarePen, Trash2, Check, MessageSquareText, Undo2 } from 'lucide-react';
 import StarRating from './StarRating.jsx';
 import { useBookStore } from '../store/useBookStore';
 import { useResolvedPath } from 'react-router-dom';
@@ -7,7 +7,8 @@ function BookCard({ book }) {
 
   const { pathname } = useResolvedPath()
   const isLibrary = pathname === "/library"
-  const { deleteBook, moveToLib, moveToHome, setFormData, getLibCount } = useBookStore()
+  const { deleteBook, moveToLib, moveToHome, getLibCount, 
+          setFormData, setCommentData } = useBookStore()
 
   const handleEditClick = () => {
     setFormData({
@@ -17,6 +18,14 @@ function BookCard({ book }) {
       cover: book.cover
     })
     document.getElementById("edit-book-modal").showModal()
+  }
+
+  const handleCommentClick = () => {
+    setCommentData({
+      id: book.id,
+      comment: book.comment || ""
+    })
+    document.getElementById("comment-book-modal").showModal()
   }
 
   const handleMoveToLib = async () => {
@@ -44,9 +53,11 @@ function BookCard({ book }) {
         className="h-105 w-70"/>
       </figure>
 
-      <div className="flex flex-col justify-center items-center text-center p-3 mt-4">
-        <h2 className="text-4xl font-caveat font-bold">{book.name}</h2>
-        <p className="text-xl font-bold font-comfortaa text-primary mt-3">{book.author}</p>
+      <div className="flex flex-col text-center p-3 mt-4">
+        <div className='flex flex-col justify-center items-center h-30'>
+          <h2 className="text-4xl font-caveat font-bold">{book.name}</h2>
+          <p className="text-xl font-bold font-comfortaa text-primary mt-3">{book.author}</p>
+        </div>
         <div className="my-3">
           {isLibrary && (
             <StarRating book={book} />
@@ -60,32 +71,46 @@ function BookCard({ book }) {
           <div 
             className="tooltip tooltip-primary tooltip-bottom font-comfortaa" 
             data-tip="Вернуть в список">
-              <button className="btn btn-sm btn-primary btn-outline">
-                <Undo2 className="size-4" onClick={handleMoveToHome}/>
+              <button className="btn btn-sm btn-primary btn-outline"
+                      onClick={handleMoveToHome}>
+                <Undo2 className="size-4"/>
               </button>
           </div>
           ) : (
           <div 
             className="tooltip tooltip-success tooltip-bottom font-comfortaa" 
             data-tip="Переместить в библиотеку">
-              <button className="btn btn-sm btn-success btn-outline">
-                <Check className="size-4" onClick={handleMoveToLib}/>
+              <button className="btn btn-sm btn-success btn-outline"
+                      onClick={handleMoveToLib}>
+                <Check className="size-4"/>
               </button>
           </div>
           )}
           <div 
             className="tooltip tooltip-info tooltip-bottom font-comfortaa ms-2" 
             data-tip="Редактировать">
-              <button className="btn btn-sm btn-info btn-outline">
-                <SquarePen className="size-4" onClick={handleEditClick}/>
+              <button className="btn btn-sm btn-info btn-outline"
+                      onClick={handleEditClick}>
+                <SquarePen className="size-4"/>
               </button>
           </div>
+          {isLibrary && (
+          <div 
+            className="tooltip tooltip-warning tooltip-bottom font-comfortaa ms-2" 
+            data-tip="Открыть отзыв">
+              <button className="btn btn-outline btn-warning btn-sm"
+                      onClick={handleCommentClick}>
+                <MessageSquareText className="size-4"/>
+              </button>
+          </div>
+          )}
         </div>
         <div 
           className="tooltip tooltip-error tooltip-bottom font-comfortaa" 
           data-tip="Удалить">
-            <button className='btn btn-sm btn-error btn-outline'>
-              <Trash2 className='size-4' onClick={handleDeleteBook} />
+            <button className='btn btn-sm btn-error btn-outline'
+                    onClick={handleDeleteBook}>
+              <Trash2 className='size-4'/>
             </button>
         </div>
       </div>

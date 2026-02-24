@@ -3,6 +3,7 @@ import { useBookStore } from "../store/useBookStore"
 import BookCard from "../components/BookCard"
 import { BookOpen } from "lucide-react"
 import EditBookModal from "../components/EditBookModal"
+import CommentBookModal from "../components/CommentBookModal"
 
 const Library = () => {
 
@@ -40,6 +41,7 @@ const Library = () => {
         </div>
       )}
       <EditBookModal />
+      <CommentBookModal />
     </main>
   )
 }

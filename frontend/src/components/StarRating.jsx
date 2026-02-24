@@ -16,7 +16,7 @@ const StarRating = ({ book }) => {
         type="radio"
         name={`${book.id}-rating`}
         value={value}
-        className="mask mask-star-2 bg-primary"
+        className="mask mask-star-2 bg-primary size-7"
         aria-label={`${value} star`}
         checked={book.rating === value}
         onChange={() => handleRatingUpdate(value)}/>

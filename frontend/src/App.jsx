@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import { useThemeStore } from "./store/useThemeStore"
 import { useAuthStore } from "./store/useAuthStore"
 import Navbar from "./components/Navbar"
-import TBR from "./pages/Home"
+import TBR from "./pages/TBR"
 import Welcome from "./pages/Welcome"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
@@ -26,6 +26,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-base-200 transition-colors duration-300" data-theme={ theme }>
+      <Toaster toastOptions={{ className: 'font-comfortaa' }}/>
       <Navbar />
         <Routes>
           <Route path="/" element={<Welcome />} />
@@ -41,7 +42,6 @@ function App() {
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="*" element={<Welcome />} />
         </Routes>
-      <Toaster />
     </div>
   )
 }

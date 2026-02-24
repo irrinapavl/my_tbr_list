@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ThemeSelector from "./ThemeSelector.jsx"
 import { useAuthStore } from '../store/useAuthStore.js'
 import { BookOpenText, LibraryBig, KeyRound } from 'lucide-react'
@@ -8,6 +8,7 @@ import { useBookStore } from '../store/useBookStore.js'
 
 function Navbar() {
 
+  const navigate = useNavigate()
   const { pathname } = useResolvedPath()
   const isLibrary = pathname === "/library"
   const isCheckInbox = pathname === "/check-inbox"
@@ -37,21 +38,21 @@ function Navbar() {
             </Link>
           </div>
           {(isLibrary || isChangePassword) && (
-            <button className='btn btn-primary btn-outline ms-7'>
-              <Link to='/my-tbr-list' className='font-comfortaa'>К списку книг</Link>
+            <button className='btn btn-primary btn-outline ms-7 font-comfortaa'
+                    onClick={() => navigate('/my-tbr-list')}>
+              К списку книг
             </button>
           )}
           <div className="flex gap-4">
             {(user && !isChangePassword) && (
               <div className="indicator">
-                <div 
+                <button 
                   className="p-2 rounded-full hover:bg-base-200 transition-colors 
                   cursor-pointer tooltip tooltip-primary tooltip-left font-comfortaa"
-                  data-tip="Изменить пароль">
-                    <Link to='/change-password'>
-                      <KeyRound className="btn-ghost"/>
-                    </Link>
-                </div>
+                  data-tip="Изменить пароль"
+                  onClick={() => navigate('/change-password')}>
+                    <KeyRound className="btn-ghost"/>
+                </button>
               </div>
               )}
             {(user &&
@@ -64,13 +65,14 @@ function Navbar() {
             <ThemeSelector />
             {(user && !isLibrary && !isCheckInbox && !isVerifyEmail) && (
               <div className="indicator">
-                <div 
+                <button 
                   className="p-2 rounded-full hover:bg-base-200 transition-colors 
                   cursor-pointer tooltip tooltip-primary tooltip-right font-comfortaa"
-                  data-tip="Библиотека прочитанного">
-                    <Link to='/library'><LibraryBig className="btn-ghost" /></Link>
+                  data-tip="Библиотека прочитанного"
+                  onClick={() => navigate('/library')}>
+                    <LibraryBig className="btn-ghost" />
                   <span className="badge badge-sm badge-primary indicator-item">{libCount}</span>
-                </div>
+                </button>
               </div>
             )}
           </div>

@@ -18,6 +18,7 @@ CREATE TABLE books(
   finished BOOLEAN DEFAULT FALSE,
   finished_at TIMESTAMP,
   rating INTEGER CHECK (rating >= 1 AND rating <= 5),
+  comment TEXT,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
 
@@ -29,8 +30,9 @@ CREATE TABLE user_tokens (
   expires_at TIMESTAMP NOT NULL,
   created_at TIMESTAMP DEFAULT NOW(),
   used_at TIMESTAMP
-);
+)
 
+ALTER TABLE books ADD COLUMN comment TEXT;
 ALTER TABLE user_tokens ADD CONSTRAINT unique_user_token_type UNIQUE (user_id, type);
 
 INSERT INTO books (name, author, cover, user_id) 

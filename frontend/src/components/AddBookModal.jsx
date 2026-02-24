@@ -87,7 +87,7 @@ function AddBookModal() {
                 <span className="loading loading-spinner loading-sm" />
               ) : (
                 <>
-                <CirclePlus className="size-5 mr-2" />
+                <CirclePlus className="size-5" />
                 <span className="font-comfortaa">Добавить</span>
                 </>
               )}    

@@ -1,17 +1,18 @@
 import { useEffect } from "react"
 import { useBookStore } from "../store/useBookStore"
-import { BookOpen, BookHeart, ScrollText, Pencil } from "lucide-react"
+import { BookOpen, BookCheck, ScrollText, Pencil } from "lucide-react"
 import { useAuthStore } from "../store/useAuthStore"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const Welcome = () => {
 
-    const { user } = useAuthStore()
-    const { getLibCount } = useBookStore()
+  const navigate = useNavigate()
+  const { user } = useAuthStore()
+  const { getLibCount } = useBookStore()
 
-    useEffect(() => {
-      getLibCount()
-    }, [getLibCount])
+  useEffect(() => {
+    getLibCount()
+  }, [getLibCount])
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-8 font-comfortaa">
@@ -24,8 +25,9 @@ const Welcome = () => {
             <h1 className="text-2xl font-semibold mt-5">
               Добро пожаловать, {user.username}!
             </h1>
-            <button  className="btn btn-primary btn-lg mt-3">
-              <Link to="/my-tbr-list">Перейти к списку книг</Link>
+            <button className="btn btn-primary btn-lg mt-3" 
+                    onClick={() => navigate('/my-tbr-list')}>
+              Перейти к списку книг
             </button>
           </div>
         </div>
@@ -37,23 +39,21 @@ const Welcome = () => {
               Составьте интерактивный список всех книг,<br />
               которые давно хотите прочитать!
             </p>
-            <BookHeart className="size-13 mt-3"/>
+            <BookCheck className="size-13 mt-3"/>
           </div>
           <div className="flex flex-col gap-4 items-center mt-5">
             <div className="flex">
-              <button  className="btn btn-primary btn-lg">
-                <Link to="/login">
-                  Войдите в аккаунт, чтобы увидеть свой список книг
-                </Link>
+              <button className="btn btn-primary btn-lg" 
+                      onClick={() => navigate('/login')}>
+                Войдите в аккаунт, чтобы увидеть свой список книг
                 <ScrollText />
               </button>
             </div>
             <p>Нет аккаунта? Ничего страшного!</p>
             <div className="flex">
-              <button className="btn btn-primary btn-lg">
-                <Link to="/register">
-                  Зарегистрируйтесь, чтобы начать составлять свой список
-                </Link>
+              <button className="btn btn-primary btn-lg"
+                      onClick={() => navigate('/register')}>
+                Зарегистрируйтесь, чтобы начать составлять свой список
                 <Pencil />
               </button>
             </div>

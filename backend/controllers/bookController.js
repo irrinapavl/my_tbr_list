@@ -259,3 +259,35 @@ export const updateRating = async (req, res) => {
     })
   }
 }
+
+export const commentBook = async (req, res) => {
+
+  const { id } = req.params
+  const { comment } = req.body
+  const user_id = req.user.id
+
+  try {
+    const result = await pool.query(
+      'UPDATE books SET comment = $1 WHERE id = $2 AND user_id = $3 RETURNING *',
+      [comment, id, user_id]
+    )
+    if (result.rows.length === 0) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "Book not found"
+      })
+    }
+
+    res.status(200).json({ 
+      success: true, 
+      data: result.rows[0] 
+    })
+
+  } catch (err) {
+    console.log("Error commenting a book", err)
+    res.status(500).json({
+      success: false, 
+      message: "Internal Server Error"
+    })
+  }
+}

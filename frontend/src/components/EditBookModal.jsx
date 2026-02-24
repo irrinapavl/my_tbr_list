@@ -90,7 +90,7 @@ function EditBookModal() {
                 <span className="loading loading-spinner loading-sm" />
               ) : (
                 <>
-                <Check className="size-5 mr-2" />
+                <Check className="size-5" />
                 <span className="font-comfortaa">Сохранить изменения</span>
                 </>
               )}    
