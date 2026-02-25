@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useBookStore } from "../store/useBookStore"
 import { BookOpen, BookCheck, ScrollText, Pencil } from "lucide-react"
 import { useAuthStore } from "../store/useAuthStore"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router"
 
 const Welcome = () => {
 

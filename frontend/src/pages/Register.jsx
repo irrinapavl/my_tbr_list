@@ -2,7 +2,7 @@ import validator from "email-validator"
 import toast from "react-hot-toast"
 import { useRef, useState } from "react"
 import { useAuthStore } from "../store/useAuthStore"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate, Link } from "react-router"
 
 const Register = () => {
 

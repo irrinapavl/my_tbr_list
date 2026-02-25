@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useAuthStore } from "../store/useAuthStore"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate, Link } from "react-router"
 
 const Login = () => {
 
@@ -60,7 +60,7 @@ const Login = () => {
           </p>
           <button 
             type="button"
-            className="btn btn-primary btn-outline h-7 mt-2"
+            className="btn btn-primary btn-outline h-7 mt-3"
             onClick={() => navigate('/recover-password')}>
               Забыли пароль?
           </button>

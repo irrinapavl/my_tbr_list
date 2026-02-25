@@ -1,6 +1,6 @@
 import { useAuthStore } from "../store/useAuthStore"
 import { useRef } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router"
 import toast from "react-hot-toast"
 
 const SetNewPassword = () => {

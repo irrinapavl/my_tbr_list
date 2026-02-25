@@ -23,8 +23,13 @@ export const protect = async (req, res, next) => {
     req.user = user.rows[0]
     next()
 
-  } catch (error) {
-    console.error(error)
+  } catch (err) {
+    console.error("JWT verification failed", err.message)
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    });
     res.status(401).json({ message: "Not authorized, token failed" })
   }
 }

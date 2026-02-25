@@ -1,9 +1,8 @@
 import { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useResolvedPath } from 'react-router'
 import ThemeSelector from "./ThemeSelector.jsx"
 import { useAuthStore } from '../store/useAuthStore.js'
 import { BookOpenText, LibraryBig, KeyRound } from 'lucide-react'
-import { useResolvedPath } from 'react-router-dom'
 import { useBookStore } from '../store/useBookStore.js'
 
 function Navbar() {

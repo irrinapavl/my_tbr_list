@@ -1,7 +1,7 @@
 import { SquarePen, Trash2, Check, MessageSquareText, Undo2 } from 'lucide-react';
 import StarRating from './StarRating.jsx';
 import { useBookStore } from '../store/useBookStore';
-import { useResolvedPath } from 'react-router-dom';
+import { useResolvedPath } from 'react-router';
 
 function BookCard({ book }) {
 
