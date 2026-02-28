@@ -7,7 +7,7 @@ import EditBookModal from "../components/EditBookModal"
 
 function TBR() {
 
-  const { books, loading, getBooks, getLibCount, error } = useBookStore()
+  const { books, loading, getBooks, getLibCount, resetForm, error } = useBookStore()
 
   useEffect(() => {
     getBooks()
@@ -25,13 +25,16 @@ function TBR() {
       <div className="flex justify-between px-1">
         <button 
           className="btn btn-primary rounded-3xl"
-          onClick={() => document.getElementById("add-book-modal").showModal()}>
+          onClick={() => {
+            resetForm()
+            document.getElementById("add-book-modal").showModal()
+          }}>
           <CirclePlus className="size-5" />
           <span className="font-comfortaa">Добавить книгу</span>
         </button>
         <div 
-        className="tooltip tooltip-primary tooltip-left font-comfortaa p-0" 
-        data-tip="Обновить список">
+          className="tooltip tooltip-primary tooltip-left font-comfortaa p-0" 
+          data-tip="Обновить список">
           <button className="btn btn-ghost btn-circle" onClick={getBooks}>
           <RefreshCw className="size-5" />
         </button>

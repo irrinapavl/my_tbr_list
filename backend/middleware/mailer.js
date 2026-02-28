@@ -28,7 +28,7 @@ export const sendVerificationEmail = async (email, username, rawToken) => {
                 <tr>
                   <td style="padding: 40px 30px;">
                     <h3 style="margin-top: 0; color: #2c3e50; font-size: 24px;">Здравствуйте, ${username}! 📚</h3>
-                    <p style="color: #34495e; line-height: 1.6; font-size: 16px;">Пожалуйста, нажмите на кнопку ниже, чтобы подтвердить адрес электронной почты:</p>
+                    <p style="color: #34495e; line-height: 1.6; font-size: 16px;">Пожалуйста, нажмите на кнопку ниже, чтобы подтвердить адрес электронной почты и завершить регистрацию:</p>
                     
                     <table cellpadding="0" cellspacing="0" border="0" style="margin: 30px auto 20px;">
                       <tr>
@@ -42,7 +42,7 @@ export const sendVerificationEmail = async (email, username, rawToken) => {
                       Ссылка действительна в течение часа, и ее можно использовать всего один раз.
                     </p> 
                     <p style="color: #34495e; line-height: 1.6; font-size: 16px;">
-                      Если Вы не запрашивали восстановление пароля, извините за беспокойство; просто проигнорируйте это письмо.
+                      Если Вы не регистрировались на нашем сайте, извините за беспокойство; просто проигнорируйте это письмо.
                     </p>
                   </td>
                 </tr>

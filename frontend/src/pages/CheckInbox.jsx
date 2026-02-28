@@ -16,7 +16,7 @@ const CheckInbox = () => {
       toast.error('Email не найден')
       return
     }
-    const success = await resendVerification(email)
+    const success = await resendVerification({ email })
     if (success) {
       setResent(true)
       setTimeout(() => setResent(false), 60000)

@@ -17,7 +17,10 @@ function AddBookModal() {
           Добавить новую книгу в список
         </h3>
 
-        <form onSubmit={addBook}>
+        <form onSubmit={(e) => {
+          e.preventDefault()
+          addBook()
+          }}>
           <div className="grip gap-6 font-comfortaa">
             <div className="form-conrol mb-3">
               <label className="label">

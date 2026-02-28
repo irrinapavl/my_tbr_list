@@ -192,7 +192,7 @@ export const resendVerification = async (req, res) => {
 
   try {
     const result = await pool.query(
-      'SELECT id, email_verified FROM users WHERE email = $1',
+      'SELECT id, username, email_verified FROM users WHERE email = $1',
       [email]
     )
     if (result.rows.length === 0) {
@@ -223,7 +223,7 @@ export const resendVerification = async (req, res) => {
       [user.id, hashedToken, 'email_verification']
     )
 
-    await sendVerificationEmail(email, rawToken).catch(err => {
+    await sendVerificationEmail(email, user.username, rawToken).catch(err => {
       console.log('Failed to resend verification email', err)
     })
 

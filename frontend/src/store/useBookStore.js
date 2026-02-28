@@ -35,8 +35,7 @@ export const useBookStore = create((set, get) => ({
   },
   setCommentData: (comment) => set({ commentData: comment }),
 
-  addBook: async (e) => {
-    e.preventDefault()
+  addBook: async () => {
     set({ loading: true })
     try {
       const { formData } = get()

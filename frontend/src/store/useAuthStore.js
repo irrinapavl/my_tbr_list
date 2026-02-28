@@ -67,7 +67,7 @@ export const useAuthStore = create((set, get) => ({
 
   logout: async () => {
     try {
-      await api.post('api/auth/logout')
+      await api.post('/api/auth/logout')
       set({ user: null })
       toast.success('Вы успешно вышли из аккаунта!')
     } catch (err) {
@@ -102,10 +102,10 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  resendVerification: async (email) => {
+  resendVerification: async ({ email }) => {
     set({ loading: true, error: null });
     try {
-      await api.post('/api/auth/resend-verification', email)
+      await api.post('/api/auth/resend-verification', { email })
       toast.success('Письмо успешно отправлено')
       return true
     } catch (err) {
