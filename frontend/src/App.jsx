@@ -28,20 +28,20 @@ function App() {
     <div className="min-h-screen bg-base-200 transition-colors duration-300" data-theme={ theme }>
       <Toaster toastOptions={{ className: 'font-comfortaa' }}/>
       <Navbar />
-        <Routes>
-          <Route path="/" element={<Welcome />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/check-inbox" element={<CheckInbox /> } />
-          <Route path="/verify-email" element={<VerifyEmail />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/recover-password" element={<RecoverPassword /> } />
-          <Route path="/verify-recovery" element={<VerifyRecovery /> } />
-          <Route path="/set-new-password" element={<SetNewPassword /> } />
-          <Route path="/my-tbr-list" element={<TBR /> } />
-          <Route path="/library" element={<Library /> } />
-          <Route path="/change-password" element={<ChangePassword />} />
-          <Route path="*" element={<Welcome />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/check-inbox" element={<CheckInbox /> } />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/recover-password" element={<RecoverPassword /> } />
+        <Route path="/verify-recovery" element={<VerifyRecovery /> } />
+        <Route path="/set-new-password" element={<SetNewPassword /> } />
+        <Route path="/my-tbr-list" element={<TBR /> } />
+        <Route path="/library" element={<Library /> } />
+        <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="*" element={<Welcome />} />
+      </Routes>
     </div>
   )
 }

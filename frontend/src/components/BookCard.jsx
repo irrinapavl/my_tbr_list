@@ -50,7 +50,7 @@ function BookCard({ book }) {
         <img 
         src={book.cover} 
         alt={book.name}
-        className="h-105 w-70"/>
+        className="h-105 w-full"/>
       </figure>
 
       <div className="flex flex-col text-center p-3 mt-4">

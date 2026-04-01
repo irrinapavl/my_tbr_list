@@ -19,9 +19,10 @@ function TBR() {
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
+      {error && (
       <div className="flex flex-col items-center">
         <span className="font-comfortaa text-red-500">{error}</span>
-      </div>
+      </div>)}
       <div className="flex justify-between px-1">
         <button 
           className="btn btn-primary rounded-3xl"

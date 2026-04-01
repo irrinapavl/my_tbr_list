@@ -12,10 +12,11 @@ const api = axios.create({
 export const useBookStore = create((set, get) => ({
 
   books: [],
-  libCount: null,
+  libCount: 0,
   loading: false,
   error: null,  
   formData: {
+    id: "",
     name: "",
     author: "",
     cover: ""
@@ -52,7 +53,7 @@ export const useBookStore = create((set, get) => ({
     }
   },
 
-  editBook: async () => {
+  editTBRBook: async () => {
     set({ loading: true })
     try {
       const { formData } = get()
@@ -144,6 +145,23 @@ export const useBookStore = create((set, get) => ({
       set({ libCount: response.data.data, error: null })
     } catch (err) {
       console.log("Error counting finished books", err)
+    } finally {
+      set({ loading: false })
+    }
+  },
+
+  editLibBook: async () => {
+    set({ loading: true })
+    try {
+      const { formData } = get()
+      await api.put(`/api/mybooks/${formData.id}`, formData)
+      await get().getLibBooks()
+      get().resetForm()
+      toast.success("Книга отредактирована!")
+      document.getElementById("edit-book-modal").close()
+    } catch (err) {
+      console.log("Error editing a book", err)
+      toast.error("Извините, что-то пошло не так")
     } finally {
       set({ loading: false })
     }

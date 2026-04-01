@@ -1,9 +1,12 @@
+import { useResolvedPath } from "react-router";
 import { useBookStore } from "../store/useBookStore"
 import { Book, UserRoundPen, BookImage, Check } from 'lucide-react';
 
 function EditBookModal() {
-    
-  const { editBook, formData, setFormData, loading } = useBookStore()
+
+  const { pathname } = useResolvedPath()
+  const isLibrary = pathname === "/library"
+  const { editTBRBook, editLibBook, formData, setFormData, loading } = useBookStore()
 
   return (
     <dialog id="edit-book-modal" className="modal">
@@ -19,7 +22,7 @@ function EditBookModal() {
 
         <form onSubmit={(e) => {
           e.preventDefault()
-          editBook()
+          {isLibrary ? editLibBook() : editTBRBook()}
           }}>
           <div className="grip gap-6 font-comfortaa">
             <div className="form-conrol mb-3">
